@@ -4,11 +4,9 @@ class UsersController < ApplicationController
   end
 
 
-
   def new
     @user = User.new
   end
-
 
 
 #POST /users (+ params )
@@ -18,6 +16,7 @@ class UsersController < ApplicationController
     #=> name, email, pass/confirmation
     if @user.save
       #Success (valid params)
+      log_in @user
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
       #reidirect_to user_path(@user)
