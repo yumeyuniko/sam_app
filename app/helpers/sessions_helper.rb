@@ -11,7 +11,7 @@ module SessionsHelper
       elsif (user_id = cookies.signed[:user_id])
         #raise       # テストがパスすれば、この部分がテストされていないことがわかる
         user = User.find_by(id: user_id)
-        if user && user.authenticated?(cookies[:remember_token])
+        if user && user.authenticated?(:remember, cookies[:remember_token])
           log_in user
           @current_user = user
         end
@@ -49,7 +49,7 @@ module SessionsHelper
       cookies.delete(:remember_token)
     end
 
-        # 記憶したURL（もしくはデフォルト値）にリダイレクト
+    # 記憶したURL（もしくはデフォルト値）にリダイレクト
     def redirect_back_or(default)
       redirect_to(session[:forwarding_url] || default)
       session.delete(:forwarding_url)
